@@ -17,7 +17,7 @@ This script is really only useful for exported projects that wish to make some f
 2. Create a `plugins` folder at your project root (next to your executable for exported projects)
 3. Create a new folder for each of your plugins
 4. Add a `config.ini` file for each plugin (e.g. `plugins/my_gdnative_lib/config.ini`)
-5. Fill out the `config.ini` (see the `example` project for an example. Note that the `dll`s are not checked into this repository, but you can download the exported release for a runnable example)
+5. Fill out the `config.ini` (see the `example` project for an example. Note that the `dll`s are not checked into this repository, but you can download the [exported release](https://github.com/you-win/gdnative-runtime-loader/releases) for a runnable example)
 6. Create a new `gdnative_runtime_loader.gd` file with an optional `path` arg (By default this searches for a `plugins` folder at your project root, but this can be customized)
 7. Call `presetup()` in order to parse the libraries
 8. If your library has a custom `init` hook, you will need to pass those args now to the library (e.g. `runtime_loader.libraries["my_lib"].add_init_arg(1))` to add an init arg `1` to a library called `my_lib`)
@@ -36,4 +36,4 @@ if pinger != null:
     print(pinger.ping())
 ```
 
-A full example is provided as a release. The `ponger` library is deliberately misconfigured in order to showcase error handling. It is trivial to fix. If you cannot figure out how to fix `ponger`'s configuration, this library is too advanced for you.
+[A full example is provided as a release](https://github.com/you-win/gdnative-runtime-loader/releases). The `ponger` library is deliberately misconfigured in order to showcase error handling. It is trivial to fix. If you cannot figure out how to fix `ponger`'s configuration, this library is too advanced for you.
