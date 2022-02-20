@@ -243,6 +243,8 @@ func presetup() -> int:
 				continue
 			
 			var nscript: Resource = load(EMPTY_GDNS_PATH).duplicate()
+			# NOTE Godot doesn't completely expose these properties to GDScript but we can force
+			# it using this syntax
 			nscript.set(NativeLib.CLASS_NAME, c)
 			nscript.set(NativeLib.SCRIPT_CLASS_NAME, config.get_value(c, Config.EXTENDS))
 			nscript.library = library.native_library
