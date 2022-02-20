@@ -9,6 +9,7 @@ Useful for making parts of your game/application optional to users. An example o
 This script is really only useful for exported projects that wish to make some features optional. If possible, you should instead rely on CICD to package your game/app appropriately.
 
 ## Limitations
+* The library must be exposed to Godot using GDNative
 * If a library is **unloaded** at runtime, your game/app will probably crash
 * The runtime loader must be used to interact with your library
 
