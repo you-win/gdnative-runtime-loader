@@ -46,7 +46,7 @@ const NativeLib := {
 const DEFAULT_PREFIX := "godot_"
 const DEFAULT_SEARCH_FOLDER := "plugins"
 
-const EMPTY_GDNS_PATH := "res://addons/gdnative_hotloader/empty.gdns"
+const EMPTY_GDNS_PATH := "res://addons/gdnative-runtime-loader/empty.gdns"
 
 class Library extends Object:
 	const CALLING_TYPE := "standard_varcall"
@@ -134,6 +134,12 @@ func _notification(what):
 ###############################################################################
 
 func presetup() -> int:
+	"""
+	Scans the search_path for valid plugins. Attempts to fail gracefully if information is missing
+
+	This only creates the necessary resources for initalizing a library. Actual initialization
+	must be done in setup()
+	"""
 	var dir := Directory.new()
 	
 	if dir.open(search_path) != OK:
@@ -248,6 +254,9 @@ func presetup() -> int:
 	return OK
 
 func setup(lib_name: String = "") -> void:
+	"""
+	Initializes the library(ies)
+	"""
 	if lib_name.empty():
 		for key in libraries.keys():
 			libraries[key].setup()

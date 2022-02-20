@@ -1,10 +1,10 @@
 extends CanvasLayer
 
-var Hotloader = preload("res://addons/gdnative_hotloader/gdnative_hotloader.gd")
+var RuntimeLoader = preload("res://addons/gdnative-runtime-loader/gdnative_runtime_loader.gd")
 
 onready var label: Label = $CenterContainer/Label
 
-var hotloader
+var runtime_loader
 
 var pinger
 var ponger
@@ -14,24 +14,24 @@ var ponger
 ###############################################################################
 
 func _ready() -> void:
-	hotloader = Hotloader.new("res://example/plugins/" if OS.is_debug_build() else "")
+	runtime_loader = RuntimeLoader.new("res://example/plugins/" if OS.is_debug_build() else "")
 	
-	hotloader.presetup()
-	hotloader.setup()
+	runtime_loader.presetup()
+	runtime_loader.setup()
 	
-	pinger = hotloader.create_class("pinger", "Pinger")
+	pinger = runtime_loader.create_class("pinger", "Pinger")
 	if pinger != null:
 		print(pinger.ping())
 	
-	ponger = hotloader.create_class("ponger", "Ponger")
+	ponger = runtime_loader.create_class("ponger", "Ponger")
 	if ponger != null:
 		print(ponger.ping())
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
-		hotloader.cleanup()
-		hotloader.presetup()
-		hotloader.setup()
+		runtime_loader.cleanup()
+		runtime_loader.presetup()
+		runtime_loader.setup()
 		_setup()
 	
 	label.text = ("Ticks msec: %s\nUnix time: %s" %
@@ -47,11 +47,11 @@ func _process(_delta: float) -> void:
 ###############################################################################
 
 func _setup() -> void:
-	pinger = hotloader.create_class("pinger", "Pinger")
+	pinger = runtime_loader.create_class("pinger", "Pinger")
 	if pinger != null:
 		print(pinger.ping())
 	
-	ponger = hotloader.create_class("ponger", "Ponger")
+	ponger = runtime_loader.create_class("ponger", "Ponger")
 	if ponger != null:
 		print(ponger.ping())
 
