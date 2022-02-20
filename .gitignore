@@ -1,0 +1,6 @@
+.import/
+
+export/
+**/target
+**/*.dll
+**/*.so
