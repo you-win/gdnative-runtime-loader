@@ -36,17 +36,10 @@ const SEARCH_SECTIONS := [
 	Config.OSX64
 ]
 
-const NativeLib := {
-	"ENTRY": "entry",
-
-	"CLASS_NAME": "class_name",
-	"SCRIPT_CLASS_NAME": "script_class_name"
-}
+const NATIVE_LIB_ENTRY := "entry"
 
 const DEFAULT_PREFIX := "godot_"
 const DEFAULT_SEARCH_FOLDER := "plugins"
-
-const EMPTY_GDNS_PATH := "res://addons/gdnative-runtime-loader/empty.gdns"
 
 class Library extends Object:
 	const CALLING_TYPE := "standard_varcall"
@@ -133,7 +126,7 @@ func _notification(what):
 # Public functions                                                            #
 ###############################################################################
 
-func presetup() -> int:
+func scan() -> int:
 	"""
 	Scans the search_path for valid plugins. Attempts to fail gracefully if information is missing
 
@@ -218,7 +211,7 @@ func presetup() -> int:
 				continue
 			
 			nlib_config.set_value(
-				NativeLib.ENTRY,
+				NATIVE_LIB_ENTRY,
 				section,
 				"%s/%s" % [path, config.get_value(section, Config.LIB)]
 			)
@@ -242,11 +235,10 @@ func presetup() -> int:
 				push_error("Class %s missing key '%s'" % [c, Config.EXTENDS])
 				continue
 			
-			var nscript: Resource = load(EMPTY_GDNS_PATH).duplicate()
-			# NOTE Godot doesn't completely expose these properties to GDScript but we can force
-			# it using this syntax
-			nscript.set(NativeLib.CLASS_NAME, c)
-			nscript.set(NativeLib.SCRIPT_CLASS_NAME, config.get_value(c, Config.EXTENDS))
+			var nscript := NativeScript.new()
+			
+			nscript.set_class_name(c)
+			nscript.set_script_class_name(config.get_value(c, Config.EXTENDS))
 			nscript.library = library.native_library
 			
 			library.native_classes[c] = nscript

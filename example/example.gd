@@ -16,7 +16,7 @@ var ponger
 func _ready() -> void:
 	runtime_loader = RuntimeLoader.new("res://example/plugins/" if OS.is_debug_build() else "")
 	
-	runtime_loader.presetup()
+	runtime_loader.scan()
 	runtime_loader.setup()
 	
 	pinger = runtime_loader.create_class("pinger", "Pinger")
