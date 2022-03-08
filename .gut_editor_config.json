@@ -22,7 +22,7 @@
  "prefix": "test_",
  "selected": "test_gdnative_runtime_loader.gd",
  "should_exit": false,
- "should_exit_on_success": true,
+ "should_exit_on_success": false,
  "should_maximize": true,
  "show_help": false,
  "suffix": ".gd",

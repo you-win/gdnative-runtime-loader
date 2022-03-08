@@ -84,13 +84,6 @@ func test_process_folder():
 # We can only run this test once. Unloading and reloading binaries at runtime tends to cause
 # a hard crash
 func test_setup_and_run():
-	# We cannot automatically test setting up and using a library using github actions because
-	# the required binaries are not checked into git. We could commit the binaries but that's
-	# extremely bad practice
-	var env = OS.get_environment("TEST_ENV")
-	if env == null or env.empty():
-		return
-	
 	var loader = LOADER.new(ProjectSettings.globalize_path(TEST_PLUGINS_PATH))
 	
 	assert_eq(loader.scan(), OK)
@@ -100,21 +93,13 @@ func test_setup_and_run():
 	loader.setup()
 	
 	assert_true(loader.libraries["pinger"].is_initialized)
-
+	
 	var pinger = loader.create_class("pinger", "Pinger")
 
 	assert_not_null(pinger)
 	assert_not_null(pinger.count_up_msec())
 	
 	var unsafe_pinger = loader.create_class_unsafe("pinger", "Pinger")
-	
+
 	assert_has_method(unsafe_pinger, "ping")
 	assert_has_method(unsafe_pinger, "count_up_msec")
-	
-	loader.cleanup()
-	
-	assert_eq(loader.libraries.size(), 0)
-	
-	var bad_pinger = loader.create_class("pinger", "Pinger")
-	
-	assert_null(bad_pinger)
