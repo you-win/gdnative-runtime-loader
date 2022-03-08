@@ -20,7 +20,6 @@ GDScript
 runtime_loader = RuntimeLoader.new("res://example/plugins/" if OS.is_debug_build() else "")
 	
 runtime_loader.scan()
-runtime_loader.setup()
 
 pinger = runtime_loader.create_class("pinger", "Pinger")
 if pinger != null:
@@ -65,5 +64,4 @@ extends="Reference"
 6. Create a new `gdnative_runtime_loader.gd` file with an optional `path` arg (By default this searches for a `plugins` folder at your project root, but this can be customized)
 7. Call `scan()` in order to parse the libraries
 8. If your library has a custom `init` hook, you will need to pass those args now to the library (e.g. `runtime_loader.libraries["my_lib"].add_init_arg(1))` to add an init arg `1` to a library called `my_lib`)
-9. Call `setup()` to initialize each library
-10. Create classes defined in your library and use them in your game/app (e.g. `runtime_loader.create_class("my_lib", "foo")` to create a class called `Foo` from the `my_lib` library)
+9. Create classes defined in your library and use them in your game/app (e.g. `runtime_loader.create_class("my_lib", "foo")` to create a class called `Foo` from the `my_lib` library)

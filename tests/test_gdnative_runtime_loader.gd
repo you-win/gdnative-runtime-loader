@@ -41,8 +41,7 @@ func test_scan():
 	assert_true(loader0.libraries.has("pinger"))
 	
 	var pinger_lib = loader0.libraries["pinger"]
-
-	assert_false(pinger_lib.is_initialized)
+	
 	assert_eq(pinger_lib.native_classes.size(), 1)
 	assert_true(pinger_lib.native_classes.has("Pinger"))
 	assert_true(pinger_lib.native_classes["Pinger"] is NativeScript)
@@ -63,8 +62,6 @@ func test_scan():
 
 	assert_true(loader1.libraries.has("pinger"))
 
-	assert_false(loader1.libraries["pinger"].is_initialized)
-
 func test_process_folder():
 	var loader = LOADER.new()
 
@@ -76,23 +73,16 @@ func test_process_folder():
 	
 	var pinger_lib = loader.libraries["pinger"]
 
-	assert_false(pinger_lib.is_initialized)
 	assert_eq(pinger_lib.native_classes.size(), 1)
 	assert_true(pinger_lib.native_classes.has("Pinger"))
 	assert_true(pinger_lib.native_classes["Pinger"] is NativeScript)
 
 # We can only run this test once. Unloading and reloading binaries at runtime tends to cause
 # a hard crash
-func test_setup_and_run():
+func test_run():
 	var loader = LOADER.new(ProjectSettings.globalize_path(TEST_PLUGINS_PATH))
 	
 	assert_eq(loader.scan(), OK)
-	
-	assert_false(loader.libraries["pinger"].is_initialized)
-	
-	loader.setup()
-	
-	assert_true(loader.libraries["pinger"].is_initialized)
 	
 	var pinger = loader.create_class("pinger", "Pinger")
 
@@ -103,3 +93,5 @@ func test_setup_and_run():
 
 	assert_has_method(unsafe_pinger, "ping")
 	assert_has_method(unsafe_pinger, "count_up_msec")
+	
+	assert_eq(unsafe_pinger.add_int(1, 2), 3)
