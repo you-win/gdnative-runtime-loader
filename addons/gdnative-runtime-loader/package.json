@@ -1,0 +1,21 @@
+{
+  "name": "@sometimes_youwin/gdnative-runtime-loader",
+  "version": "1.0.0",
+  "description": "Load dynamic libs at runtime for Godot 3",
+  "main": "gdnative_runtime_loader.gd",
+  "godot": "3.4",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/you-win/gdnative-runtime-loader.git"
+  },
+  "keywords": [
+    "godot",
+    "godot-engine"
+  ],
+  "author": "Tim Yuen",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/you-win/gdnative-runtime-loader/issues"
+  },
+  "homepage": "https://github.com/you-win/gdnative-runtime-loader#readme"
+}
